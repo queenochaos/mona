@@ -1,15 +1,3 @@
-export const AddCommas = (x: number): string => {
-  const y = x ? x.toString().split(".") : [""];
-  y[0] = y[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return y.join(".");
-};
-
-export const AddZero = (num: number, digits = 3): string => {
-  const arr = new Array(digits).fill(0);
-  return `${arr.join("").slice(0, 0 - num.toString().length)}${num}`;
-};
-
-
 export const ColorFromHex = (color: string | number[]): number => {
     if (!color) return Math.floor(Math.random() * (0xffffff + 1));
     let newColor = 0;
@@ -25,15 +13,32 @@ export const ColorFromHex = (color: string | number[]): number => {
     return newColor;
   };
 
+
+/**
+ * @class BetterMap
+ */
 export class BetterMap<K, V> extends Map<K, V> {
     name: string;
+    /**
+     * Create a new BetterMap
+     * @param {string} name - A friendly name for the BetterMap
+     */
     constructor(name: string) {
       super();
       this.name = name;
     }
+    /**
+     * Convert the map into an array of values
+     * @returns Array of items in the map
+     */
     array() {
       return this.map((x) => x);
     }
+    /**
+     * Array#every but for a Map
+     * @param fn - Function to run on every element.
+     * @returns {boolean} True or false
+     */
     every(fn: (v: V, k: K) => boolean): boolean {
       for (const [k, v] of this.entries()) {
         if (!fn(v, k)) {

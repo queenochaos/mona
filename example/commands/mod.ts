@@ -1,0 +1,1 @@
+export {default as ping} from "./test/ping.ts"
