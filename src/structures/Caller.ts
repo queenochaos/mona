@@ -156,9 +156,10 @@ export class Caller {
     );
   }
   async edit(content: string | Record<string, unknown>) {
+    if (typeof content === "string") content = { content };
     await this.client.rest.patch(
       `https://discord.com/api/v10/webhooks/${this.appId}/${this.token}/messages/@original`,
-      {content},
+      content,
     );
   }
   async respond(content: string | Record<string, unknown>) {
