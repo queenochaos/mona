@@ -58,10 +58,9 @@ class Dispatcher {
   handleMessage(message: MessagePayload) {
     if (!this.shouldHandleMessage(message)) return false;
     const cmd = this.client.registry.messageCommands.find((x) => {
-      console.log(x.aliasPattern.exec(message.content.toLowerCase()));
+//      console.log(x.aliasPattern.exec(message.content.toLowerCase()));
       return !!(x.aliasPattern.exec(message.content.toLowerCase()));
     });
-    console.log(cmd?.name);
     if (!cmd) return false;
     const data: MessageCallerData = {
       name: cmd.name,
