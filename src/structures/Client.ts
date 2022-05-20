@@ -13,10 +13,10 @@ interface QueenOptions {
 export class Queen extends Client {
   dispatcher: Dispatcher;
   registry: Registry;
-  constructor(options: ClientOptions, clientID: string) {
+  constructor(options: ClientOptions, clientID: string, token: string) {
     super(options);
     this.dispatcher = new Dispatcher(this);
-    this.registry = new Registry(this, clientID);
+    this.registry = new Registry(this, clientID, token);
     this.on("raw", (evt, d, s) => {
       if (evt === "INTERACTION_CREATE") {
         if (d.type === 2) return this.dispatcher.handle(d);

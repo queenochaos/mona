@@ -13,11 +13,13 @@ class Registry {
   client_id: string;
   commands: BetterMap<string, Command>;
   messageCommands: BetterMap<string, MessageCommand>;
-  constructor(client: Queen, clientID: string) {
+  _token: string;
+  constructor(client: Queen, clientID: string, token: string) {
     this.client = client;
     this.client_id = clientID
     this.commands = new BetterMap("Commands");
     this.messageCommands = new BetterMap("MessageCommands");
+    this._token = token;
   }
   async reRegisterAll() {
     return this.updateCommands(this.commands.array());
@@ -38,7 +40,7 @@ class Registry {
     const resp = await fetch(guild ? guildURL(this.client_id, guild) : globalURL(this.client_id), {
       method: "POST",
       headers: {
-        Authorization: `Bot ${this.client.token}`,
+        Authorization: `Bot ${this._token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(cmdjson),
@@ -51,7 +53,7 @@ class Registry {
     const resp = await fetch(guild ? guildURL(this.client_id, guild) : globalURL(this.client_id), {
       method: "PUT",
       headers: {
-        Authorization: `Bot ${this.client.token}`,
+        Authorization: `Bot ${this._token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(cmdjson),
@@ -77,7 +79,7 @@ class Registry {
   async fetchCommands(guild?: string) {
     const resp = await fetch(guild ? guildURL(this.client_id, guild) : globalURL(this.client_id), {
       method: "GET",
-      headers: { Authorization: `Bot ${this.client.token}` },
+      headers: { Authorization: `Bot ${this._token}` },
     });
     const res = await resp.json();
     return res;
